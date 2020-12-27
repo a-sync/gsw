@@ -17,7 +17,7 @@ const servers = [
     }
 ];
 
-const watchedUsers = process.env.WATCHED_USERS ? process.env.WATCHED_USERS.split(',') : ['Rusik', 'gunner', 'iDok'];
+const watchedUsers = process.env.WATCHED_USERS ? process.env.WATCHED_USERS.split(',') : [];
 const MAX_PLAYERS = process.env.MAX_PLAYERS_ON_SERVER || 2;
 // //CONFIG
 
@@ -109,7 +109,7 @@ function searchServersAndAlert(infos: ServerInfo[]) {
 
         email({
             subject: 'GSW Alert Off.',
-            text: `No more watched users or too many players on:  \n ${alertOffServerInfos.join('\n ')}\n\n`
+            text: `No more watched users or more then ${MAX_PLAYERS} players on:  \n ${alertOffServerInfos.join('\n ')}\n\n`
         });
     }
 
