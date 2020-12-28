@@ -8,11 +8,8 @@ The node_modules folder or part of the node modules folder can be included in th
 
 ## env vars
 ```
-EMAIL_SERVICE=sendgrid
-EMAIL_USER=apikey
-EMAIL_PASS=
-EMAIL_FROM=
-EMAIL_TO=
+TELEGRAM_BOT_TOKEN=1308519611:AAXXX
+TELEGRAM_CHAT_ID=321987000
 WATCHED_USERS=buddy89,peter,coolguy2000
 MAX_PLAYERS_ON_SERVER=2
 DBG=1

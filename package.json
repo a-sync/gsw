@@ -12,13 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "gamedig": "github:a-sync/node-gamedig#feature/node8",
-    "nodemailer": "^6.4.17",
+    "slimbot": "^5.0.0",
     "string.prototype.padstart": "^3.1.1"
   },
   "devDependencies": {
     "@types/gamedig": "^2.0.1",
     "@types/node": "^14.14.16",
-    "@types/nodemailer": "^6.4.0",
     "dotenv": "^8.2.0",
     "typescript": "^4.1.3"
   }

@@ -1,6 +1,8 @@
 import { query, QueryResult } from 'gamedig';
 const padStart = require('string.prototype.padstart');
-import {createTransport, SendMailOptions} from 'nodemailer';
+const Slimbot = require('slimbot');
+
+const slimbot = new Slimbot(process.env.TELEGRAM_BOT_TOKEN);
 
 // Look a for a player and alert when available on an ARMA 3 server
 // CONFIG
@@ -107,10 +109,7 @@ function searchServersAndAlert(infos: ServerInfo[]) {
         });
         if (DEBUG) console.log('alertOffServerInfos', alertOffServerInfos); // DEBUG
 
-        email({
-            subject: 'GSW Alert Off.',
-            text: `No more watched users or more then ${MAX_PLAYERS} players on:  \n ${alertOffServerInfos.join('\n ')}\n\n`
-        });
+        sendAlert(`No more watched users or more then ${MAX_PLAYERS} players on:  \n ${alertOffServerInfos.join('\n ')}\n\n`);
     }
 
     const msg = [];
@@ -137,10 +136,7 @@ function searchServersAndAlert(infos: ServerInfo[]) {
     if (DEBUG && lastOnline.length) console.log('lastOnline', lastOnline); // DEBUG
 
     if (msg.length) {
-        email({
-            subject: 'GSW Alert!',
-            text: msg.join('\n')
-        });
+        sendAlert(msg.join('\n'));
     }
 }
 
@@ -205,41 +201,11 @@ function printServers(infos) {
     }
 }
 
-function email (options: SendMailOptions) {
-    const from = process.env.EMAIL_FROM || process.env.EMAIL_USER;
-    let body = {
-        from,
-        to: process.env.EMAIL_TO || from,
-        ...options
-    }
-
-    return transporter.sendMail(body, (err, result) => {
-        if (err) {
-            console.error(err);
-            return false;
-        }
-        // console.log(result);
-        console.log('email sent...');
-    });
+function sendAlert(msg) {
+    return slimbot.sendMessage(process.env.TELEGRAM_CHAT_ID, msg);
 }
 
 // MAIN
-const transporter = createTransport({
-    service: process.env.EMAIL_SERVICE || 'SendGrid',
-    auth: {
-        user: process.env.EMAIL_USER || 'apikey',
-        pass: process.env.EMAIL_PASS
-    }
-});
-
-transporter.verify((error, success) => {
-    if (error) {
-        console.error(error);
-    } else {
-        console.log('email transport ready...');
-    }
-});
-
 let globalTimer = setInterval(async () => {
     console.log('\n'+'='.repeat(63));
     const infos = await checkServers();
