@@ -20,7 +20,7 @@ const servers = [
 ];
 
 const watchedUsers = process.env.WATCHED_USERS ? process.env.WATCHED_USERS.split(',') : [];
-const MAX_PLAYERS = process.env.MAX_PLAYERS_ON_SERVER || 2;
+const MAX_PLAYERS = process.env.MAX_PLAYERS_ON_SERVER || 3;
 // //CONFIG
 
 const DEBUG = Boolean(process.env.DBG) || true;
